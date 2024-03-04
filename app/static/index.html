@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Job Advertisement</title>
+</head>
+
+<body>
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 id="jobTitle" class="card-title"></h2>
+        <p id="jobFunction" class="card-text"><strong>Job Function:</strong></p>
+        <p id="businessUnit" class="card-text"><strong>Business Unit:</strong></p>
+        <p id="divisionDepartment" class="card-text"><strong>Division Department:</strong></p>
+        <button class="btn btn-primary">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to get URL parameters
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Update content based on URL parameters
+    document.addEventListener('DOMContentLoaded', function () {
+      var jobTitle = getParameterByName('jobtitle');
+      var jobFunction = getParameterByName('job_function');
+      var businessUnit = getParameterByName('business_unit');
+      var divisionDepartment = getParameterByName('division_department');
+
+      // Update HTML content
+      document.getElementById('jobTitle').textContent = jobTitle || 'Job Title';
+      document.getElementById('jobFunction').textContent += ' ' + (jobFunction || 'Job Function Value');
+      document.getElementById('businessUnit').textContent += ' ' + (businessUnit || 'Business Unit Value');
+      document.getElementById('divisionDepartment').textContent += ' ' + (divisionDepartment || 'Division Department Value');
+    });
+  </script>
+
+</body>
+
+</html>
