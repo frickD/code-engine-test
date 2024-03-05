@@ -41,4 +41,4 @@ async def process_job_data(
     }
 
     html_path = Path( str(request.url).split("/", 3)[-2] + "/?jobtitle=" + jobtitle + "&job_function=" + job_function  + "&business_unit=" + business_unit + "&division_department=" + division_department)
-    return html_path
+    return {"result" : html_path}
