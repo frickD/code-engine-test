@@ -4,8 +4,14 @@ from fastapi import FastAPI, Query, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from pathlib import Path
 import os
+
+class Result(BaseModel):
+    url: str
 
 file_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,14 +37,9 @@ async def process_job_data(
     business_unit: str = Query(...),
     division_department: str = Query(...),
     
-):
-    # Process the job data (you can perform any processing logic here)
-    result = {
-        "jobtitle": jobtitle,
-        "job_function": job_function,
-        "business_unit": business_unit,
-        "division_department": division_department,
-    }
-
-    html_path = Path( str(request.url).split("/", 3)[-2] + "/?jobtitle=" + jobtitle + "&job_function=" + job_function  + "&business_unit=" + business_unit + "&division_department=" + division_department)
-    return {"result" : html_path}
+) -> Result:
+    
+    html_path = str(request.url).split("/", 3)[-2] + "/?jobtitle=" + jobtitle + "&job_function=" + job_function  + "&business_unit=" + business_unit + "&division_department=" + division_department
+    result = Result(url=html_path)
+    json_compatible_item_data = jsonable_encoder(result)
+    return JSONResponse(content=json_compatible_item_data)
